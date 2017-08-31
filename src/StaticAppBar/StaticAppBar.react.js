@@ -21,7 +21,6 @@ class StaticAppBar extends Component {
     });
 
     componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll);
         var didScroll;
         var lastScrollTop = 0;
         var delta = 5;
@@ -44,7 +43,7 @@ class StaticAppBar extends Component {
             }
             // If they scrolled down and are past the navbar, add class .nav-up.
             // This is necessary so you never see what is "behind" the navbar.
-            if (st > lastScrollTop && st > navbarHeight + 400) {
+            if (st > lastScrollTop && st > navbarHeight + 250) {
                 // Scroll Down
                 $('header').removeClass('nav-down').addClass('nav-up');
             } else if (st + $(window).height() < $(document).height()) {
@@ -62,7 +61,7 @@ class StaticAppBar extends Component {
                 <header className="nav-down" >
                     <AppBar
                         style={{
-                          backgroundColor: '#000',
+                          backgroundColor: '#4285f4',
                         }}
                         id="headerSection"
                         className="topAppBar"
@@ -78,7 +77,7 @@ class StaticAppBar extends Component {
                 >
                     <AppBar
                         style={{
-                          backgroundColor: '#000',
+                          backgroundColor: '#4285f4',
                         }}
                         className="drawerAppBar"
                         onTouchTap={this.handleDrawerClose} />

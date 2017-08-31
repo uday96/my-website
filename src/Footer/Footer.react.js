@@ -25,7 +25,7 @@ class Footer extends Component {
     return (
       <div className='footer-wrapper'>
           <div className='footer-container'>
-            <span><center>© 2017 <strong>Uday Theja</strong></center></span>
+            <span style={{marginLeft:'10px'}}>© 2017 <strong>Uday Theja</strong></span>
             <div id='outer'>
               <div className='inner'>
                 <IconButton iconStyle={styles.mediumIcon}

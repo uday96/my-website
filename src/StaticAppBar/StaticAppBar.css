@@ -1,10 +1,30 @@
+header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 46px;
+  width: 100vw;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+header {
+    height: 46px;
+    position: fixed;
+    top: 0;
+    transition: top 0.9s ease-in-out;
+    width: 100%;
+}
+
 .triangle {
   height: 0;
   width: 0;
   border-left: 100px solid transparent;
   border-right: 100px solid transparent;
   border-bottom: 100px solid transparent;
-  border-top: 100px solid #ECEFF1;
+  border-top: 100px solid #fff;
   margin: 0 auto;
   position: absolute;
   left: 0;
@@ -19,6 +39,14 @@
   font-size: 20px;
   color: #000;
   font-family: "Courier New", Courier, monospace;
+}
+
+.nav-down{
+    box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28) !important;
+}
+
+.nav-up {
+    top: -150px;
 }
 
 .topAppBar button{
@@ -44,36 +72,9 @@
 .drawerAppBar button{
     margin-top: 0px !important;
 }
-.top-menu{
-    top: -26px;
-}
-.iconMenuRight{
-    display: block;
-}
-@media only screen and (max-width: 800px){
 
-    .top-menu{
-        display: none !important;
-    }
+@media only screen and (max-width: 800px){
     .topAppBar button{
         display: block  !important;
-    }
-    .top-menu{
-        display: none;
-    }
-    .conversation__description .description__heading {
-        margin-top: 0;
-        max-width: 100%;
-    }
-    .section_copy{
-        padding: 60px 0px;
-    }
-    .img-container {
-        padding-right: 20px;
-    }
-    .android-mockup{
-        max-width: 100%;
-        margin-left: 0%;
-        text-align: center;
     }
 }
