@@ -74,7 +74,7 @@ class StaticAppBar extends Component {
             height: '64px',
             textDecoration: 'none'
         }
-        var topLinks = [
+        var topLeftLinks = [
             {
                 lable: 'About',
                 url: '/',
@@ -87,21 +87,26 @@ class StaticAppBar extends Component {
                 style: linkstyle,
                 labelStyle: labelStyle
             },
-            {
-                lable: 'Projects',
-                url: '/projects',
-                style: linkstyle,
-                labelStyle: labelStyle
-            },
-            {
-                lable: 'Blogs',
-                url: '/blogs',
-                style: linkstyle,
-                labelStyle: labelStyle
-            },
         ];
 
-        let navLlinks = topLinks.map((link, i) => {
+        var topRightLinks = [
+          {
+            lable: 'Projects',
+            url: '/projects',
+            style: linkstyle,
+            labelStyle: labelStyle
+        },
+        {
+            lable: 'Blogs',
+            url: '/blogs',
+            style: linkstyle,
+            labelStyle: labelStyle
+        },
+      ];
+
+      var topLinks = topLeftLinks.concat(topRightLinks);
+
+        let navLeftlinks = topLeftLinks.map((link, i) => {
              if (this.props.location.pathname === link.url) {
                 link.labelStyle = {
                     borderBottom: '2px solid #fff',
@@ -120,6 +125,27 @@ class StaticAppBar extends Component {
 
             )
         });
+
+        let navRightlinks = topRightLinks.map((link, i) => {
+             if (this.props.location.pathname === link.url) {
+                link.labelStyle = {
+                    borderBottom: '2px solid #fff',
+                    padding: '0px 25px 12px 25px',
+                    margin: '0 2px',
+                    color:'#fff',
+                    textDecoration:'none',
+                    font: '700 14px Roboto,sans-serif',
+                    wordSpacing: '2px',
+                    textTransform: 'none',
+                    verticalAlign: 'bottom'
+                };
+            }
+            return (
+                 <Link key={i} to={link.url} style={link.labelStyle}>{link.lable}</Link>
+
+            )
+        });
+
         let menuLlinks = topLinks.map((link, i) => {
              if (this.props.location.pathname === link.url) {
                 link.labelStyle = {
@@ -138,10 +164,18 @@ class StaticAppBar extends Component {
             )
         });
 
-        const TopMenu = (props) => (
+        const TopLeftMenu = (props) => (
             <div style={{ position: 'relative'}}>
                 <div className="top-menu" style={{ position: 'relative'}}>
-                    {navLlinks}
+                    {navLeftlinks}
+                </div>
+            </div>
+        );
+
+        const TopRightMenu = (props) => (
+            <div style={{ position: 'relative'}}>
+                <div className="top-menu" style={{ position: 'relative'}}>
+                    {navRightlinks}
                 </div>
             </div>
         );
@@ -150,16 +184,30 @@ class StaticAppBar extends Component {
 
             <div>
                 <header className="nav-down" >
-                    <AppBar
-                        style={{
-                          backgroundColor: '#4285f4',
-                        }}
-                        id="headerSection"
-                        className="topAppBar"
-                        title={title}
-                        onLeftIconButtonTouchTap={this.handleDrawer}
-                        iconElementRight={<TopMenu />}
-                    />
+                {(window.matchMedia('only screen and (max-width: 768px)').matches) ?
+                  (<AppBar
+                      style={{
+                        backgroundColor: '#4285f4',
+                      }}
+                      id="headerSection"
+                      className="topAppBar"
+                      title={title}
+                      onLeftIconButtonTouchTap={this.handleDrawer}
+                      iconElementRight={<TopRightMenu />}
+                  />)
+                  :
+                  (<AppBar
+                      style={{
+                        backgroundColor: '#4285f4',
+                      }}
+                      id="headerSection"
+                      className="topAppBar"
+                      title={title}
+                      onLeftIconButtonTouchTap={this.handleDrawer}
+                      iconElementLeft={<TopLeftMenu />}
+                      iconElementRight={<TopRightMenu />}
+                  />)
+                }
                 </header>
                 <Drawer
                     docked={false}
