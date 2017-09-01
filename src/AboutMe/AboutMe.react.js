@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './AboutMe.css';
 import StaticAppBar from '../StaticAppBar/StaticAppBar.react';
-// import $ from 'jquery';
+import RaisedButton from 'material-ui/RaisedButton';
 import Footer from '../Footer/Footer.react';
 
 class AboutMe extends Component{
@@ -35,6 +35,12 @@ class AboutMe extends Component{
               <b>E-mail:</b> udayteja96@gmail.com<br/>
               <b>Address:</b> Room 235, Ganga Hostel, IIT Madras
             </p>
+          </div>
+        </div>
+        <div className="blue-wrapper">
+          <div className="blue-container">
+              <div className="heading">Download my Resume</div>
+              <RaisedButton label="Download" style={{marginTop: '25px',marginBottom: '25px'}} />
           </div>
         </div>
       <Footer />
