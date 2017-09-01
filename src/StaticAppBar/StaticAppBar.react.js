@@ -3,6 +3,8 @@ import AppBar from 'material-ui/AppBar';
 import React, { Component } from 'react';
 import Drawer from 'material-ui/Drawer';
 import $ from 'jquery';
+import { Link } from 'react-router-dom';
+import MenuItem from 'material-ui/MenuItem';
 
 class StaticAppBar extends Component {
     constructor(props) {
@@ -55,6 +57,95 @@ class StaticAppBar extends Component {
 
     render() {
       var title = <div className='triangle'><span className='title-text'>Uday Theja</span></div>
+
+      const labelStyle = {
+            padding: '0px 25px 7px 25px',
+            font: '500 14px Roboto,sans-serif',
+            margin: '0 2px',
+            textTransform: 'none',
+            textDecoration:'none',
+            wordSpacing: '2px',
+            color: '#f2f2f2',
+            verticalAlign: 'bottom'
+        }
+
+        const linkstyle = {
+            color: '#fff',
+            height: '64px',
+            textDecoration: 'none'
+        }
+        var topLinks = [
+            {
+                lable: 'About',
+                url: '/',
+                style: linkstyle,
+                labelStyle: labelStyle
+            },
+            {
+                lable: 'Work',
+                url: '/work',
+                style: linkstyle,
+                labelStyle: labelStyle
+            },
+            {
+                lable: 'Projects',
+                url: '/projects',
+                style: linkstyle,
+                labelStyle: labelStyle
+            },
+            {
+                lable: 'Blogs',
+                url: '/blogs',
+                style: linkstyle,
+                labelStyle: labelStyle
+            },
+        ];
+
+        let navLlinks = topLinks.map((link, i) => {
+             if (this.props.location.pathname === link.url) {
+                link.labelStyle = {
+                    borderBottom: '2px solid #fff',
+                    padding: '0px 25px 12px 25px',
+                    margin: '0 2px',
+                    color:'#fff',
+                    textDecoration:'none',
+                    font: '700 14px Roboto,sans-serif',
+                    wordSpacing: '2px',
+                    textTransform: 'none',
+                    verticalAlign: 'bottom'
+                };
+            }
+            return (
+                 <Link key={i} to={link.url} style={link.labelStyle}>{link.lable}</Link>
+
+            )
+        });
+        let menuLlinks = topLinks.map((link, i) => {
+             if (this.props.location.pathname === link.url) {
+                link.labelStyle = {
+                    font: '700 14px Roboto,sans-serif',
+                    wordSpacing: '2px',
+                    textTransform: 'none',
+                    borderBottom: '3px solid #fff',
+                    padding: '0px 20px 16px 20px',
+                    margin: '0 1px'
+                };
+            }
+            return (
+                <MenuItem key={i} onTouchTap={this.handleDrawerClose} className="drawerItem">
+                    <Link to={link.url}>{link.lable}</Link>
+                </MenuItem>
+            )
+        });
+
+        const TopMenu = (props) => (
+            <div style={{ position: 'relative'}}>
+                <div className="top-menu" style={{ position: 'relative'}}>
+                    {navLlinks}
+                </div>
+            </div>
+        );
+
         return (
 
             <div>
@@ -67,6 +158,7 @@ class StaticAppBar extends Component {
                         className="topAppBar"
                         title={title}
                         onLeftIconButtonTouchTap={this.handleDrawer}
+                        iconElementRight={<TopMenu />}
                     />
                 </header>
                 <Drawer
@@ -81,6 +173,7 @@ class StaticAppBar extends Component {
                         }}
                         className="drawerAppBar"
                         onTouchTap={this.handleDrawerClose} />
+                    {menuLlinks}
                 </Drawer>
             </div>
         );
