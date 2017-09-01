@@ -97,6 +97,19 @@
     color: #fff;
 }
 
+.img-container{
+    width: 50%;
+    border-radius: 100%;
+}
+
+.img-dp{
+    text-align: left;
+    width: 60%;
+    margin-left: 10%;
+    max-width: 313px;
+    border-radius: 100%;
+}
+
 @media only screen and (min-width: 1400px){
 
     .device_section{
@@ -128,6 +141,20 @@
         padding-bottom: 200px;
     }
 }
+
+@media only screen and (max-width: 800px){
+  .img-container{
+      text-align: center;
+      width: 60%;
+      margin: 0 auto;
+  }
+  .img-dp{
+      text-align: center;
+      width: 60%;
+      margin: 0 auto;
+  }
+}
+
 @media only screen and (max-width: 480px){
     .container{
         padding: 35px 20px 120px;
@@ -145,6 +172,9 @@
         text-align: center;
     }
     .info-container{
+        width: 60%;
+    }
+    .img-container{
         width: 60%;
     }
     .bottom_section {

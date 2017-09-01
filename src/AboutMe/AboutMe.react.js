@@ -3,6 +3,7 @@ import './AboutMe.css';
 import StaticAppBar from '../StaticAppBar/StaticAppBar.react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Footer from '../Footer/Footer.react';
+import UdayImg from '../images/Uday.jpg';
 
 class AboutMe extends Component{
 
@@ -24,6 +25,9 @@ class AboutMe extends Component{
             <p className="text_description">
             Hi, I am <b>Uday Theja</b>, pursuing my Computer Science & Engineering major from Indian Institute of Technology Madras.
             </p>
+          </div>
+          <div className='img-container'>
+            <img src={UdayImg} alt='Uday-DP' className='img-dp' />
           </div>
         </div>
         <div className="device_section">
