@@ -59,9 +59,10 @@ class StaticAppBar extends Component {
       var title = <div className='triangle'><span className='title-text'>Uday Theja</span></div>
 
       const labelStyle = {
-            padding: '0px 25px 7px 25px',
+            border: '2px solid #fff',
+            padding: '10px 30px 10px 30px',
+            margin: '5px 50px 0px 50px',
             font: '500 14px Roboto,sans-serif',
-            margin: '0 2px',
             textTransform: 'none',
             textDecoration:'none',
             wordSpacing: '2px',
@@ -109,9 +110,9 @@ class StaticAppBar extends Component {
         let navLeftlinks = topLeftLinks.map((link, i) => {
              if (this.props.location.pathname === link.url) {
                 link.labelStyle = {
-                    borderBottom: '2px solid #fff',
-                    padding: '0px 25px 12px 25px',
-                    margin: '0 2px',
+                    border: 'thick double #fff',
+                    padding: '10px 30px 10px 30px',
+                    margin: '5px 50px 0px 50px',
                     color:'#fff',
                     textDecoration:'none',
                     font: '700 14px Roboto,sans-serif',
@@ -122,16 +123,15 @@ class StaticAppBar extends Component {
             }
             return (
                  <Link key={i} to={link.url} style={link.labelStyle}>{link.lable}</Link>
-
             )
         });
 
         let navRightlinks = topRightLinks.map((link, i) => {
              if (this.props.location.pathname === link.url) {
                 link.labelStyle = {
-                    borderBottom: '2px solid #fff',
-                    padding: '0px 25px 12px 25px',
-                    margin: '0 2px',
+                    border: 'thick double #fff',
+                    padding: '10px 30px 10px 30px',
+                    margin: '5px 50px 0px 50px',
                     color:'#fff',
                     textDecoration:'none',
                     font: '700 14px Roboto,sans-serif',
@@ -142,7 +142,6 @@ class StaticAppBar extends Component {
             }
             return (
                  <Link key={i} to={link.url} style={link.labelStyle}>{link.lable}</Link>
-
             )
         });
 
@@ -166,7 +165,7 @@ class StaticAppBar extends Component {
 
         const TopLeftMenu = (props) => (
             <div style={{ position: 'relative'}}>
-                <div className="top-menu" style={{ position: 'relative'}}>
+                <div className="top-menu" style={{ position: 'relative', marginTop: '10px'}}>
                     {navLeftlinks}
                 </div>
             </div>
@@ -174,7 +173,7 @@ class StaticAppBar extends Component {
 
         const TopRightMenu = (props) => (
             <div style={{ position: 'relative'}}>
-                <div className="top-menu" style={{ position: 'relative'}}>
+                <div className="top-menu" style={{ position: 'relative', marginTop: '10px'}}>
                     {navRightlinks}
                 </div>
             </div>

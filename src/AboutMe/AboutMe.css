@@ -23,9 +23,17 @@
     margin: 0 auto;
     max-width: 880px;
     font-family: 'Roboto', sans-serif;
-    border-style: solid;
-    border: thick double #4285f4;
     color: #414141;
+}
+
+.heading p{
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 32px;
+    margin: 15px auto;
+    max-width: 430px;
+    color: #414141;
+    font-family: 'Roboto', sans-serif;
 }
 
 .device_section{

@@ -4,8 +4,16 @@ import StaticAppBar from '../StaticAppBar/StaticAppBar.react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Footer from '../Footer/Footer.react';
 import UdayImg from '../images/Uday.jpg';
+import $ from 'jquery';
 
 class AboutMe extends Component{
+
+  componentDidMount() {
+    // Adding title tag to page
+    document.title = 'About | Uday Theja';
+    //  Scrolling to top of page when component loads
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
+  }
 
   render() {
 
