@@ -2,7 +2,7 @@
   "name": "my-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": " https://uday96.github.io/my-website/",
+  "homepage": "https://uday96.github.io/my-website/",
   "dependencies": {
     "gh-pages": "^1.0.0",
     "jquery": "^3.2.1",

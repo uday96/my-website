@@ -2,7 +2,7 @@
 .head_section {
     border-bottom: 1px solid #dfdfdf;
     background: #f7f7f7;
-    margin-top: 46px;
+    padding-top: 46px;
 }
 
 .container {
@@ -53,9 +53,11 @@
     justify-content: space-between;
     border-bottom: 1px solid #dfdfdf;
 }
+
 .device_description{
     width: 50%;
 }
+
 .device_description .heading {
     font-size: 43px;
     font-weight: 100;
@@ -153,8 +155,11 @@
   }
   .img-dp{
       text-align: center;
-      width: 60%;
+      width: 80%;
       margin: 0 auto;
+  }
+  .blue-container{
+      padding: 40px 0px 40px 0px;
   }
 }
 
