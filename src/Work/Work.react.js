@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import Footer from '../Footer/Footer.react';
 import MyAllyImg from '../images/MyAlly.jpg';
 import AmexImg from '../images/AmericanExpress.png'
+import GSoCImg from '../images/GSoC.jpg';
 
 class Work extends Component {
 
@@ -81,17 +82,9 @@ class Work extends Component {
             <b>Data Analysis</b>
             <ul>
               <li>Wrote R scripts to analyze data by building different models using Time Series and Machine Learning Techniques like:
-                <ul>
-                  <li>ETS – Exponential Smoothing State Space Model</li>
-                  <li>ARIMA – Auto Regressive Integrated Moving Average</li>
-                  <li>Hybrid Models – Combines output of different Time Series Models</li>
-                  <li>Min AIC Model – Custom Cross Validating Time Series Model</li>
-                  <li>Multiple Regression</li>
-                  <li>Logistic Regression</li>
-                  <li>Multi-Layer Feed Forward Neural Network</li>
-                  <li>Bayes Classifier – GMM</li>
-                </ul>
-              </li>
+              <b>ETS</b> – Exponential Smoothing State Space Model, <b>ARIMA</b> – Auto Regressive Integrated Moving Average, <b>Hybrid Models</b> – Combines output of different Time Series Models,
+              <b>Min AIC Model</b> – Custom Cross Validating Time Series Model, <b>Multiple Regression</b>, <b>Logistic Regression</b>,
+              <b>Multi-Layer Feed Forward Neural Network</b>, <b>Bayes Classifier</b> – GMM</li>
             </ul>
           </li>
           <li>
@@ -104,8 +97,54 @@ class Work extends Component {
         </ul>
         </div>;
 
+        var gsoc = {
+          title: 'GSoC\'17 - FOSSASIA - SUSI.AI',
+          content: '',
+          designation: 'React JS Developer',
+          workPeriod: 'Summer 2017, 16 weeks',
+          image: GSoCImg,
+        }
+        gsoc.content = <div>
+        <h3>Project:</h3> <a href='https://github.com/fossasia/chat.susi.ai'>A Web Application making use of the SUSI.AI Server functionalities</a>
+        <h3>Project Deliverables:</h3>
+        To build a web application making use of the functionalities of SUSI.AI Server. The server makes use of different skills which are defined in the <a href='https://github.com/fossasia/susi_skill_data/'>Skill Data Repository</a>. The web application utilises the <a href='http://api.susi.ai'>SUSI.AI Server API</a> and will have functionalities such as replying intelligently to user queries in different formats including text, image, table, map, emojis etc, accounting features, personalization features and much more
+        <h3>Project Details:</h3>
+        I contributed to several SUSI.AI projects of <a href='https://fossasia.org/'>FOSSASIA</a> within the 2017 Google Summer of Code period and my main project was <a href='https://github.com/fossasia/chat.susi.ai'>SUSI Web Chat Application</a>. My contributions to SUSI.AI repositories have been listed below.
+        <h4>SUSI Web Chat: <a href='https://github.com/fossasia/chat.susi.ai'>GitHub Repository</a></h4>
+        <ul>
+          <li><a href='https://github.com/fossasia/chat.susi.ai/issues?q=is%3Aissue+author%3Auday96'>Issues (Assigned/Resolved)</a></li>
+          <li><a href='https://github.com/fossasia/chat.susi.ai/commits/master?author=uday9'>Commits</a></li>
+          <li><a href='https://github.com/fossasia/chat.susi.ai/pulls?q=is%3Apr+author%3Auday96'>Pull Requests</a></li>
+          <li>Deployment Link: <a href='http://chat.susi.ai'>http://chat.susi.ai</a></li>
+        </ul>
+        <h4>SUSI Skill CMS: <a href='https://github.com/fossasia/susi_skill_cms'>GitHub Repository</a></h4>
+        <ul>
+          <li><a href='https://github.com/fossasia/susi_skill_cms/issues?q=is%3Aissue+author%3Auday96'>Issues (Assigned/Resolved)</a></li>
+          <li><a href='https://github.com/fossasia/susi_skill_cms/commits/master?author=uday9'>Commits</a></li>
+          <li><a href='https://github.com/fossasia/susi_skill_cms/pulls?q=is%3Apr+author%3Auday96'>Pull Requests</a></li>
+          <li>Deployment Link: <a href='http://skills.susi.ai'>http://skills.susi.ai</a></li>
+        </ul>
+        <h4>SUSI Server: <a href='https://github.com/fossasia/susi_server'>GitHub Repository</a></h4>
+        <ul>
+          <li><a href='https://github.com/fossasia/susi_server/issues?q=is%3Aissue+author%3Auday96'>Issues (Assigned/Resolved)</a></li>
+          <li><a href='https://github.com/fossasia/susi_server/commits/development?author=uday96'>Commits</a></li>
+          <li><a href='https://github.com/fossasia/susi_server/pulls?q=is%3Apr+author%3Auday96'>Pull Requests</a></li>
+          <li>Deployment Link: <a href='http://api.susi.ai'>http://api.susi.ai</a></li>
+        </ul>
+        <h4>SUSI Skill Data: <a href='https://github.com/fossasia/susi_skill_data/'>GitHub Repository</a></h4>
+        <ul>
+          <li><a href='https://github.com/fossasia/susi_skill_data/issues?q=is%3Aissue+author%3Auday96'>Issues (Assigned/Resolved)</a></li>
+          <li><a href='https://github.com/fossasia/susi_skill_data/commits/master?author=uday96'>Commits</a></li>
+          <li><a href='https://github.com/fossasia/susi_skill_data/pulls?q=is%3Apr+author%3Auday96'>Pull Requests</a></li>
+        </ul>
+        <h4>Blog Posts</h4>
+        My Blogs posted till date on FOSSASIA blog website can be found <a href='http://blog.fossasia.org/author/uday96/'>here</a>
+        <h4>Scrums</h4>
+        My Daily Scrum Reports (i.e everyday work updates) can be found <a href='https://groups.google.com/forum/#!searchin/susiai/%5BSCRUM%5D$20Uday$20Theja$20%7Csort:relevance'>here</a>
+        </div>;
+
         this.setState({
-          posts: [myAlly, americanExpress]
+          posts: [myAlly, americanExpress, gsoc]
         })
     }
 
