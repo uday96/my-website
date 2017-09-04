@@ -93,13 +93,13 @@ class StaticAppBar extends Component {
         var topRightLinks = [
           {
             lable: 'Projects',
-            url: '/projects',
+            url: '/project  ',
             style: linkstyle,
             labelStyle: labelStyle
         },
         {
             lable: 'Blogs',
-            url: '/blogs',
+            url: '/blog',
             style: linkstyle,
             labelStyle: labelStyle
         },
