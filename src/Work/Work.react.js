@@ -7,6 +7,8 @@ import Footer from '../Footer/Footer.react';
 import MyAllyImg from '../images/MyAlly.jpg';
 import AmexImg from '../images/AmericanExpress.png'
 import GSoCImg from '../images/GSoC.jpg';
+import Close from 'material-ui/svg-icons/navigation/close';
+import Modal from 'react-modal';
 
 class Work extends Component {
 
@@ -15,6 +17,10 @@ class Work extends Component {
 
         this.state = {
             posts: [],
+            postRendered: false,
+            cards: [],
+            showCard: false,
+            cardIndex: -1,
         }
     }
 
@@ -143,13 +149,69 @@ class Work extends Component {
         My Daily Scrum Reports (i.e everyday work updates) can be found <a href='https://groups.google.com/forum/#!searchin/susiai/%5BSCRUM%5D$20Uday$20Theja$20%7Csort:relevance'>here</a>
         </div>;
 
+        var posts = [myAlly, gsoc, americanExpress];
+        var infoCards = [];
+        posts.forEach((post,index)=>{
+          var card = this.getCard(post);
+          infoCards.push(card);
+        });
+
         this.setState({
-          posts: [myAlly, americanExpress, gsoc]
+          posts: posts,
+          postRendered: true,
+          cards: infoCards,
         })
     }
 
-    render() {
+    getCard = (post) => {
+      return(
+        <div className="section_blog">
+            <Card style={{ width: '100%', padding: '0' }}>
+                <CardMedia
+                    overlay={
+                        <CardTitle
+                            className="noUnderline"
+                            subtitle={post.workPeriod} />
+                    }>
+                    <img className="featured_image"
+                        src={post.image}
+                        alt={post.title}
+                    />
+                </CardMedia>
+                <CardTitle className="noUnderline" title={post.title} subtitle={post.designation}/>
+                <CardText style={{ fontSize: '16px' }}> {post.content}
+                </CardText>
+            </Card>
+        </div>
+      )
+    }
 
+    showCard = (cardIndex) => {
+      console.log(cardIndex);
+      this.setState({
+        showCard: true,
+        cardIndex: cardIndex,
+      });
+    }
+
+    closeCard = () => {
+      this.setState({
+        showCard: false,
+        cardIndex: -1,
+      });
+    }
+
+    render() {
+      const closingStyle = {
+        position: 'absolute',
+        zIndex: 120000,
+        fill: '#fff',
+        width: '40px',
+        height: '40px',
+        right: '20px',
+        top: '20px',
+        cursor: 'pointer'
+      }
         return (
             <div>
                 <StaticAppBar {...this.props}
@@ -162,35 +224,55 @@ class Work extends Component {
                         </div>
                     </div>
                 </div>
-                    <div style={{ width: '100%' }}>
-                        {
-                            this.state.posts
-                                .map((posts, i) => {
-                                    return (
-                                        <div key={i} className="section_blog">
-                                            <Card style={{ width: '100%', padding: '0' }}>
-                                                <CardMedia
-                                                    overlay={
-                                                        <CardTitle
-                                                            className="noUnderline"
-                                                            subtitle={posts.workPeriod} />
-                                                    }>
-                                                    <img className="featured_image"
-                                                        src={posts.image}
-                                                        alt={posts.title}
-                                                    />
-                                                </CardMedia>
-                                                <CardTitle className="noUnderline" title={posts.title} subtitle={posts.designation}/>
-                                                <CardText style={{ fontSize: '16px' }}> {posts.content}
-                                                </CardText>
-                                            </Card>
-                                        </div>
-                                    )
-                                })
-                        }
+                <section id="cd-timeline" className="cd-container">
+                  <div className="cd-timeline-block">
+                    <div className="cd-timeline-img cd-picture">
                     </div>
-                    <div className="post_bottom"></div>
-                    <Footer />
+                    <div className="cd-timeline-content">
+                      <h2>Title of section 1</h2>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
+                      <div onTouchTap={this.showCard.bind(this,0)} className="cd-read-more">Read more</div>
+                      <span className="cd-date">Jan 14</span>
+                    </div>
+                  </div>
+
+                  <div className="cd-timeline-block">
+                    <div className="cd-timeline-img cd-movie">
+                    </div>
+                    <div className="cd-timeline-content">
+                      <h2>Title of section 2</h2>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde?</p>
+                      <div onTouchTap={this.showCard.bind(this,1)} className="cd-read-more">Read more</div>
+                      <span className="cd-date">Jan 18</span>
+                    </div>
+                  </div>
+
+                  <div className="cd-timeline-block">
+                    <div className="cd-timeline-img cd-picture">
+                    </div>
+                    <div className="cd-timeline-content">
+                      <h2>Title of section 3</h2>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati, quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum quis. Odit, itaque, deserunt corporis vero ipsum nisi eius odio natus ullam provident pariatur temporibus quia eos repellat consequuntur perferendis enim amet quae quasi repudiandae sed quod veniam dolore possimus rem voluptatum eveniet eligendi quis fugiat aliquam sunt similique aut adipisci.</p>
+                      <div onTouchTap={this.showCard.bind(this,2)} className="cd-read-more">Read more</div>
+                      <span className="cd-date">Jan 24</span>
+                    </div>
+                  </div>
+                </section>
+                {this.state.showCard &&
+                (<Modal
+                  isOpen={this.state.showCard}
+                  className="Video-Modal"
+                  onRequestClose={this.closeCard}
+                  contentLabel="Assistant Video"
+                  overlayClassName="Video-Overlay">
+                  <div className="video-container">
+                    {this.state.cards[this.state.cardIndex]}
+                    <Close style={closingStyle} onTouchTap={this.handleClose} />
+                  </div>
+                </Modal>)
+                }
+                <div className="post_bottom"></div>
+                <Footer />
             </div>
         );
 

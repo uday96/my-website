@@ -14,9 +14,10 @@ class App extends Component {
       <MuiThemeProvider>
       <div>
         <Switch>
-            <Route exact path={process.env.PUBLIC_URL + '/'} component={AboutMe}/>
-            <Route exact path={process.env.PUBLIC_URL + '/work'} component={Work}/>
-            <Route exact path={process.env.PUBLIC_URL + '/blog'} component={Blog}/>
+            <Route exact path={'/'} component={AboutMe}/>
+            <Route exact path={'/work'} component={Work}/>
+            <Route exact path={'/blog'} component={Blog}/>
+            <Route exact path={'/project'} component={Work}/>
         </Switch>
       </div>
       </MuiThemeProvider>
