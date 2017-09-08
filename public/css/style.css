@@ -129,13 +129,7 @@ Main components
   margin-top: -12px;
 }
 .cd-timeline-img.cd-picture {
-  background: #75ce66;
-}
-.cd-timeline-img.cd-movie {
-  background: #c03b44;
-}
-.cd-timeline-img.cd-location {
-  background: #f0ca45;
+  background: #4285f4;
 }
 @media only screen and (min-width: 1170px) {
   .cd-timeline-img {
