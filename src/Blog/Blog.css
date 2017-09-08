@@ -19,10 +19,11 @@
     object-fit: contain;
     vertical-align: middle;
 }
+
 .blog_navigation {
-    position: absolute;
-    right: 15%;
-    bottom: 150px;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .section_blog{
@@ -155,13 +156,6 @@ pre{
     white-space: pre-wrap;
     font-size: 16px;
 }
-@media only screen and (min-width: 1400px){
-    .blog_navigation {
-        position: absolute;
-        right: 15%;
-        bottom: 220px;
-    }
-}
 
 @media only screen and (max-width: 1000px){
     .section_blog{
@@ -175,8 +169,5 @@ pre{
    .post_bottom {
         width: 90%;
         margin: 10px 0 auto;
-    }
-    .blog_navigation {
-        bottom: 200px;
     }
 }

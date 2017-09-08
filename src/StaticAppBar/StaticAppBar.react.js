@@ -3,7 +3,6 @@ import AppBar from 'material-ui/AppBar';
 import React, { Component } from 'react';
 import Drawer from 'material-ui/Drawer';
 import $ from 'jquery';
-import { Link } from 'react-router-dom';
 import MenuItem from 'material-ui/MenuItem';
 
 class StaticAppBar extends Component {
@@ -93,7 +92,7 @@ class StaticAppBar extends Component {
         var topRightLinks = [
           {
             lable: 'Projects',
-            url: '/project  ',
+            url: '/project',
             style: linkstyle,
             labelStyle: labelStyle
         },
@@ -122,7 +121,7 @@ class StaticAppBar extends Component {
                 };
             }
             return (
-                 <Link key={i} to={link.url} style={link.labelStyle}>{link.lable}</Link>
+                 <a key={i} href={link.url} style={link.labelStyle}>{link.lable}</a>
             )
         });
 
@@ -141,7 +140,7 @@ class StaticAppBar extends Component {
                 };
             }
             return (
-                 <Link key={i} to={link.url} style={link.labelStyle}>{link.lable}</Link>
+                 <a key={i} href={link.url} style={link.labelStyle}>{link.lable}</a>
             )
         });
 
@@ -158,7 +157,7 @@ class StaticAppBar extends Component {
             }
             return (
                 <MenuItem key={i} onTouchTap={this.handleDrawerClose} className="drawerItem">
-                    <Link to={link.url}>{link.lable}</Link>
+                    <a href={link.url} style={link.labelStyle}>{link.lable}</a>
                 </MenuItem>
             )
         });

@@ -45,8 +45,8 @@ class Blog extends Component {
             posts: [],
             postRendered: false,
             startPage: 0,
-            nextDisplay: 'visible',
-            prevDisplay: 'hidden',
+            nextDisplay: 'true',
+            prevDisplay: 'false',
         }
     }
 
@@ -86,10 +86,10 @@ class Blog extends Component {
     previousPage = () => {
         let current = this.state.startPage;
         if (current - 5 === 0) {
-            this.setState({ startPage: current - 5, prevDisplay: 'hidden', nextDisplay: 'visible' })
+            this.setState({ startPage: current - 5, prevDisplay: 'false', nextDisplay: 'true' })
         }
         else {
-            this.setState({ startPage: current - 5, prevDisplay: 'visible', nextDisplay: 'visible' })
+            this.setState({ startPage: current - 5, prevDisplay: 'true', nextDisplay: 'true' })
         }
         this.scrollToTop();
     }
@@ -99,10 +99,10 @@ class Blog extends Component {
         let size = this.state.posts.length;
         console.log(size)
         if (current + 5 === size - 5) {
-            this.setState({ startPage: current + 5, nextDisplay: 'hidden', prevDisplay: 'visible' })
+            this.setState({ startPage: current + 5, nextDisplay: 'false', prevDisplay: 'true' })
         }
         else {
-            this.setState({ startPage: current + 5, prevDisplay: 'visible', nextDisplay: 'visible' })
+            this.setState({ startPage: current + 5, prevDisplay: 'true', nextDisplay: 'true' })
         }
         this.scrollToTop();
     }
@@ -117,14 +117,8 @@ class Blog extends Component {
         const FacebookIcon = generateShareIcon('facebook');
         const TwitterIcon = generateShareIcon('twitter');
         const nextStyle = {
-            visibility: this.state.nextDisplay,
             marginLeft: '10px'
         }
-
-        const prevStyle = {
-            visibility: this.state.prevDisplay
-        }
-
         const loadingStyle = {
             marginTop: '20px',
             position: 'relative',
@@ -251,14 +245,15 @@ class Blog extends Component {
                     </div>
                     <div className="blog_navigation">
                         <FloatingActionButton
-                            style={prevStyle}
                             backgroundColor={'#4285f4'}
+                            disabled={!this.state.prevDisplay}
                             onTouchTap={this.previousPage}>
                             <Previous />
                         </FloatingActionButton>
                         <FloatingActionButton
                             style={nextStyle}
                             backgroundColor={'#4285f4'}
+                            disabled={!this.state.nextDisplay}
                             onTouchTap={this.nextPage}>
                             <Next />
                         </FloatingActionButton>
