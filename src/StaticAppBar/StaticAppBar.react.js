@@ -147,13 +147,19 @@ class StaticAppBar extends Component {
         let menuLlinks = topLinks.map((link, i) => {
              if (this.props.location.pathname === link.url) {
                 link.labelStyle = {
-                    font: '700 14px Roboto,sans-serif',
+                    font: '700 16px Roboto,sans-serif',
                     wordSpacing: '2px',
                     textTransform: 'none',
                     borderBottom: '3px solid #fff',
-                    padding: '0px 20px 16px 20px',
-                    margin: '0 1px'
+                    color: '#4285f4',
                 };
+            }
+            else{
+              link.labelStyle = {
+                  font: '500 16px Roboto,sans-serif',
+                  wordSpacing: '2px',
+                  textTransform: 'none',
+              };
             }
             return (
                 <MenuItem key={i} onTouchTap={this.handleDrawerClose} className="drawerItem">
