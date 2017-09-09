@@ -282,7 +282,6 @@ class Work extends Component {
                     {this.state.cards[this.state.cardIndex]}
                     <Close style={closingStyle} onTouchTap={this.closeCard} />
                 </Dialog>
-                <div className="post_bottom"></div>
                 <Footer />
             </div>
         );

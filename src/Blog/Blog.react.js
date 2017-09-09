@@ -6,17 +6,16 @@ import $ from 'jquery';
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'material-ui/Card';
 import dateFormat from 'dateformat';
 import StaticAppBar from '../StaticAppBar/StaticAppBar.react';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import Next from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
-import Previous from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
-import Loading from 'react-loading-animation';
 import Footer from '../Footer/Footer.react';
 import {
     ShareButtons,
     generateShareIcon
 } from 'react-share';
+import Close from 'material-ui/svg-icons/navigation/close';
+import Dialog from 'material-ui/Dialog';
+import BlogIcon from 'material-ui/svg-icons/action/description';
 
 function arrDiff(a1, a2) {
     var a = [], diff = [];
@@ -44,9 +43,9 @@ class Blog extends Component {
         this.state = {
             posts: [],
             postRendered: false,
-            startPage: 0,
-            nextDisplay: 'true',
-            prevDisplay: 'false',
+            cards: [],
+            showCard: false,
+            cardIndex: -1,
         }
     }
 
@@ -67,65 +66,151 @@ class Blog extends Component {
             }
         }).done(function (response) {
             if (response.status !== 'ok') { throw response.message; }
-            this.setState({ posts: response.items, postRendered: true });
+            this.setState({
+              posts: response.items,
+              postRendered: true
+            });
+            this.createCards();
         }.bind(this));
     }
 
-    scrollStep() {
-        if (window.pageYOffset === 0) {
-            clearInterval(this.state.intervalId);
-        }
-        window.scroll(0, window.pageYOffset - 1000);
-    }
-    //  Function to scroll to top of page
-    scrollToTop() {
-        let intervalId = setInterval(this.scrollStep.bind(this), 16.66);
-        this.setState({ intervalId: intervalId });
-    }
-    // Function to navigate to previous page
-    previousPage = () => {
-        let current = this.state.startPage;
-        if (current - 5 === 0) {
-            this.setState({ startPage: current - 5, prevDisplay: 'false', nextDisplay: 'true' })
-        }
-        else {
-            this.setState({ startPage: current - 5, prevDisplay: 'true', nextDisplay: 'true' })
-        }
-        this.scrollToTop();
-    }
-    // Function to navigate to next page
-    nextPage = () => {
-        let current = this.state.startPage;
-        let size = this.state.posts.length;
-        console.log(size)
-        if (current + 5 === size - 5) {
-            this.setState({ startPage: current + 5, nextDisplay: 'false', prevDisplay: 'true' })
-        }
-        else {
-            this.setState({ startPage: current + 5, prevDisplay: 'true', nextDisplay: 'true' })
-        }
-        this.scrollToTop();
+    createCards = () => {
+      const {
+          FacebookShareButton,
+          TwitterShareButton,
+
+        } = ShareButtons;
+      const FacebookIcon = generateShareIcon('facebook');
+      const TwitterIcon = generateShareIcon('twitter');
+      const allCategories = ['FOSSASIA', 'GSoC', 'SUSI.AI',
+          'Tutorial', 'Android', 'API', 'App generator', 'CodeHeat', 'Community', 'Event',
+          'Event Management', 'loklak', 'Meilix', 'Open Event', 'Phimpme', 'Pocket Science Lab', 'yaydoc'];
+
+      let cards = [];
+      this.state.posts.forEach((posts, i) => {
+          let description = htmlToText.fromString(posts.description).split('…');
+          let content = posts.content;
+          let category = [];
+          posts.categories.forEach((cat) => {
+              let k = 0;
+              for (k = 0; k < allCategories.length; k++) {
+                  if (cat === allCategories[k]) {
+                      category.push(cat);
+                  }
+              }
+          });
+          var tags = arrDiff(category, posts.categories)
+          let fCategory = category.map((cat) =>
+              <span key={cat} ><a className="tagname" href={'http://blog.fossasia.org/category/' + cat.replace(/\s+/g, '-').toLowerCase()}
+                  rel="noopener noreferrer">{cat}</a></span>
+          );
+          let ftags = tags.map((tag) =>
+              <span key={tag} ><a className="tagname" href={'http://blog.fossasia.org/tag/' + tag.replace(/\s+/g, '-').toLowerCase()}
+                  rel="noopener noreferrer">{tag}</a></span>
+          );
+          let htmlContent = content.replace(/<img.*?>/, '');
+          htmlContent = renderHTML(htmlContent);
+          let image;
+          let regExp = /\[(.*?)\]/;
+          let imageUrl = regExp.exec(description[0]);
+          if (imageUrl) {
+              image = imageUrl[1]
+          }
+          let date = posts.pubDate.split(' ');
+          let d = new Date(date[0]);
+          cards.push(
+              <div key={i} className="section_work">
+                  <Card style={{ width: '100%', padding: '0' }}>
+                      <CardMedia
+                          overlay={
+                              <CardTitle
+                                  className="noUnderline"
+                                  subtitle={renderHTML('<a href="' + posts.link + '" >Published on ' + dateFormat(d, 'dddd, mmmm dS, yyyy') + '</a>')} />
+                          }>
+
+                          <img className="featured_image"
+                              src={image}
+                              alt={posts.title}
+                          />
+                      </CardMedia>
+                      <CardTitle className="noUnderline" title={posts.title} subtitle={renderHTML('by <a href="http://blog.fossasia.org/author/' + posts.author + '" >' + posts.author + '</a>')} />
+                      <CardText style={{ fontSize: '16px' }}> {htmlContent}
+                      </CardText>
+                      <div className="social-btns">
+                  <TwitterShareButton
+                      url={posts.guid}
+                      title={posts.title}
+                      via='asksusi'
+                      hashtags={posts.categories.slice(0, 4)} >
+                      <TwitterIcon
+                          size={32}
+                          round={true} />
+
+                  </TwitterShareButton>
+                  <FacebookShareButton url={posts.link}>
+                      <FacebookIcon size={32} round={true} />
+                  </FacebookShareButton>
+                      </div>
+                      <CardActions className="cardActions">
+                          <span className="calendarContainer">
+                              <i className="fa fa-calendar tagIcon"></i>
+                              {renderHTML('<a href="' + posts.link + '">' + dateFormat(d, 'mmmm dd, yyyy') + '</a>')}
+                          </span>
+                          <span className="authorsContainer">
+                              <i className="fa fa-user tagIcon"></i>
+                              <a
+                                  rel="noopener noreferrer"
+                                  href={'http://blog.fossasia.org/author/' + posts.author}
+                              >
+                                  {posts.author}
+                              </a></span>
+                          <span className='categoryContainer'>
+                              <i className="fa fa-folder-open-o tagIcon"></i>
+                              {fCategory}
+                          </span>
+                          <span className='tagsContainer'>
+                              <i className="fa fa-tags tagIcon"></i>
+                              {ftags}
+                          </span>
+                      </CardActions>
+                  </Card>
+              </div>
+          );
+      })
+
+      this.setState({
+        cards: cards,
+      });
+
     }
 
+    showCard = (cardIndex) => {
+      this.setState({
+        showCard: true,
+        cardIndex: cardIndex,
+      });
+    }
+
+    closeCard = () => {
+      this.setState({
+        showCard: false,
+        cardIndex: -1,
+      });
+    }
 
     render() {
-        const {
-            FacebookShareButton,
-            TwitterShareButton,
 
-          } = ShareButtons;
-        const FacebookIcon = generateShareIcon('facebook');
-        const TwitterIcon = generateShareIcon('twitter');
-        const nextStyle = {
-            marginLeft: '10px'
+        const closingStyle = {
+          position: 'absolute',
+          zIndex: 120000,
+          fill: '#000',
+          width: '40px',
+          height: '40px',
+          right: '20px',
+          top: '20px',
+          cursor: 'pointer'
         }
-        const loadingStyle = {
-            marginTop: '20px',
-            position: 'relative',
-        }
-        const allCategories = ['FOSSASIA', 'GSoC', 'SUSI.AI',
-            'Tutorial', 'Android', 'API', 'App generator', 'CodeHeat', 'Community', 'Event',
-            'Event Management', 'loklak', 'Meilix', 'Open Event', 'Phimpme', 'Pocket Science Lab', 'yaydoc'];
+
         return (
             <div>
                 <StaticAppBar {...this.props}
@@ -140,127 +225,178 @@ class Blog extends Component {
                         </div>
                     </div>
                 </div>
-                <Loading
-                    style={loadingStyle}
-                    isLoading={!this.state.postRendered} />
-                {!this.state.postRendered &&
-                    (<div><center>Fetching Blogs..</center></div>)}
-                {this.state.postRendered && (<div>
-                    <div style={{ width: '100%' }}>
-                        {
-                            this.state.posts
-                                .slice(this.state.startPage, this.state.startPage + 5)
-                                .map((posts, i) => {
-                                    let description = htmlToText.fromString(posts.description).split('…');
-                                    let content = posts.content;
-                                    let category = [];
-                                    posts.categories.forEach((cat) => {
-                                        let k = 0;
-                                        for (k = 0; k < allCategories.length; k++) {
-                                            if (cat === allCategories[k]) {
-                                                category.push(cat);
-                                            }
-                                        }
-                                    });
-
-                                    var tags = arrDiff(category, posts.categories)
-                                    let fCategory = category.map((cat) =>
-                                        <span key={cat} ><a className="tagname" href={'http://blog.fossasia.org/category/' + cat.replace(/\s+/g, '-').toLowerCase()}
-                                            rel="noopener noreferrer">{cat}</a></span>
-                                    );
-                                    let ftags = tags.map((tag) =>
-                                        <span key={tag} ><a className="tagname" href={'http://blog.fossasia.org/tag/' + tag.replace(/\s+/g, '-').toLowerCase()}
-                                            rel="noopener noreferrer">{tag}</a></span>
-                                    );
-                                    let htmlContent = content.replace(/<img.*?>/, '');
-                                    htmlContent = renderHTML(htmlContent);
-                                    let image;
-                                    let regExp = /\[(.*?)\]/;
-                                    let imageUrl = regExp.exec(description[0]);
-                                    if (imageUrl) {
-                                        image = imageUrl[1]
-                                    }
-                                    let date = posts.pubDate.split(' ');
-                                    let d = new Date(date[0]);
-                                    return (
-                                        <div key={i} className="section_blog">
-                                            <Card style={{ width: '100%', padding: '0' }}>
-                                                <CardMedia
-                                                    overlay={
-                                                        <CardTitle
-                                                            className="noUnderline"
-                                                            subtitle={renderHTML('<a href="' + posts.link + '" >Published on ' + dateFormat(d, 'dddd, mmmm dS, yyyy') + '</a>')} />
-                                                    }>
-
-                                                    <img className="featured_image"
-                                                        src={image}
-                                                        alt={posts.title}
-                                                    />
-                                                </CardMedia>
-                                                <CardTitle className="noUnderline" title={posts.title} subtitle={renderHTML('by <a href="http://blog.fossasia.org/author/' + posts.author + '" >' + posts.author + '</a>')} />
-                                                <CardText style={{ fontSize: '16px' }}> {htmlContent}
-                                                </CardText>
-                                                <div className="social-btns">
-                                            <TwitterShareButton
-                                                url={posts.guid}
-                                                title={posts.title}
-                                                via='asksusi'
-                                                hashtags={posts.categories.slice(0, 4)} >
-                                                <TwitterIcon
-                                                    size={32}
-                                                    round={true} />
-
-                                            </TwitterShareButton>
-                                            <FacebookShareButton url={posts.link}>
-                                                <FacebookIcon size={32} round={true} />
-                                            </FacebookShareButton>
-                                                </div>
-                                                <CardActions className="cardActions">
-                                                    <span className="calendarContainer">
-                                                        <i className="fa fa-calendar tagIcon"></i>
-                                                        {renderHTML('<a href="' + posts.link + '">' + dateFormat(d, 'mmmm dd, yyyy') + '</a>')}
-                                                    </span>
-                                                    <span className="authorsContainer">
-                                                        <i className="fa fa-user tagIcon"></i>
-                                                        <a
-                                                            rel="noopener noreferrer"
-                                                            href={'http://blog.fossasia.org/author/' + posts.author}
-                                                        >
-                                                            {posts.author}
-                                                        </a></span>
-                                                    <span className='categoryContainer'>
-                                                        <i className="fa fa-folder-open-o tagIcon"></i>
-                                                        {fCategory}
-                                                    </span>
-                                                    <span className='tagsContainer'>
-                                                        <i className="fa fa-tags tagIcon"></i>
-                                                        {ftags}
-                                                    </span>
-                                                </CardActions>
-                                            </Card>
-                                        </div>
-                                    )
-                                })
-                        }
-                    </div>
-                    <div className="blog_navigation">
-                        <FloatingActionButton
-                            backgroundColor={'#4285f4'}
-                            disabled={!this.state.prevDisplay}
-                            onTouchTap={this.previousPage}>
-                            <Previous />
-                        </FloatingActionButton>
-                        <FloatingActionButton
-                            style={nextStyle}
-                            backgroundColor={'#4285f4'}
-                            disabled={!this.state.nextDisplay}
-                            onTouchTap={this.nextPage}>
-                            <Next />
-                        </FloatingActionButton>
-                    </div>
-                    <div className="post_bottom"></div>
-                    <Footer />
-                </div>)}
+                <section id="cd-timeline" className="cd-container">
+                  <div className="cd-timeline-block"
+                    onTouchTap={this.showCard.bind(this,0)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>Implementing Version Control System for SUSI Skill CMS</h2>
+                     <span className="cd-date">2017-08-31 04:54:59</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,1)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>Fetching Images for RSS Responses in SUSI Web Chat</h2>
+                     <span className="cd-date">2017-08-30 14:03:15</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,2)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>Implementing Text To Speech Settings in SUSI WebChat</h2>
+                     <span className="cd-date">2017-08-30 12:12:54</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,3)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>Generating Map Action Responses in SUSI AI</h2>
+                     <span className="cd-date">2017-08-17 04:06:06</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,4)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>Implementing the Feedback Functionality in SUSI Web Chat</h2>
+                     <span className="cd-date">2017-08-15 10:12:18</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,5)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>Adding a Scroll To Bottom button in SUSI WebChat</h2>
+                     <span className="cd-date">2017-08-08 13:22:32</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,6)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>Storing User Settings on Server in SUSI Web Chat</h2>
+                     <span className="cd-date">2017-07-20 11:18:15</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,7)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>Implementing the Message Response Status Indicators In SUSI WebChat</h2>
+                     <span className="cd-date">2017-07-13 19:07:40</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,8)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>How SUSI WebChat Implements RSS Action Type</h2>
+                     <span className="cd-date">2017-07-11 10:59:31</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,9)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>Implementing Search Feature In SUSI Web Chat</h2>
+                     <span className="cd-date">2017-07-06 06:16:28</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,10)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>Processing Text Responses in SUSI Web Chat</h2>
+                     <span className="cd-date">2017-07-06 05:59:31</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,11)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>How SUSI AI Searches the Web For You</h2>
+                     <span className="cd-date">2017-07-03 05:19:11</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,12)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>How SUSI AI Tabulates Answers For You</h2>
+                     <span className="cd-date">2017-07-03 04:26:04</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,13)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>Map Support for SUSI Webchat</h2>
+                     <span className="cd-date">2017-06-27 20:04:19</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,14)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>Hyperlinking Support for SUSI Webchat</h2>
+                     <span className="cd-date">2017-06-27 19:07:41</span>
+                   </div>
+                 </div>
+                 <div className="cd-timeline-block"
+                   onTouchTap={this.showCard.bind(this,15)} style={{cursor: 'pointer'}}>
+                   <div className="cd-timeline-img cd-picture">
+                     <BlogIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                   </div>
+                   <div className="cd-timeline-content">
+                     <h2>How to teach SUSI skills calling an External API</h2>
+                     <span className="cd-date">2017-05-15 14:37:43</span>
+                   </div>
+                 </div>
+                </section>
+                <Dialog
+                  modal={false}
+                  open={this.state.showCard}
+                  onRequestClose={this.closeCard}
+                  autoScrollBodyContent={true}
+                >
+                    {this.state.cards[this.state.cardIndex]}
+                    <Close style={closingStyle} onTouchTap={this.closeCard} />
+                </Dialog>
+                <Footer />
             </div>
         );
 
