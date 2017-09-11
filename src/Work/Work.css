@@ -106,7 +106,7 @@
     font-weight: bold;
 }
 
-.section_work  h4 {
+.section_work h4 {
     display: block;
     font-size: 1em;
     margin-top: 1.33em;
@@ -144,7 +144,7 @@
     font-weight: bold;
 }
 
-.section_work ul {
+ul {
     display: block;
     list-style-type: disc;
     margin-top: 1em;
@@ -154,7 +154,7 @@
     padding-left: 40px;
 }
 
-.section_work ol {
+ol {
     display: block;
     list-style-type: decimal;
     margin-top: 1em;
@@ -164,11 +164,11 @@
     padding-left: 40px;
 }
 
-.section_work li {
+li {
     display: list-item;
 }
 
-.section_work i {
+i {
     font-style: italic;
 }
 
