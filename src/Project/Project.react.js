@@ -34,6 +34,18 @@ class Project extends Component {
                     <StarIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
                   </div>
                   <div className="cd-timeline-content">
+                    <h2>SUSI Web Chat</h2>
+                    <p>{'Worked on SUSI WebChat under FOSSASIA during GSoC\'17. SUSI.AI is an intelligent Open Source personal assistant.'+
+                    ' It is capable of chat and voice interaction by using APIS to perform actions such as music playback, making to-do lists,'+
+                    ' setting alarms, streaming podcasts, playing audiobooks, and providing weather, traffic, and other real time information.'}</p>
+                    <a href="https://github.com/fossasia/chat.susi.ai/" className="cd-read-more">View Source</a>
+                  </div>
+                </div>
+                <div className="cd-timeline-block">
+                  <div className="cd-timeline-img cd-picture">
+                    <StarIcon color='#fff' style={{width: '100%',height:'80%',paddingTop:'10%'}}/>
+                  </div>
+                  <div className="cd-timeline-content">
                     <h2>Proxy - CV Attendace System</h2>
                     <p>{'The Proxy Application is a software product intended to be used by the universities to record the '+
                     'students’ attendance based on the photographs uploaded of the class using face recognition algorithms.'+
