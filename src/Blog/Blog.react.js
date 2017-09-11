@@ -134,7 +134,7 @@ class Blog extends Component {
                           />
                       </CardMedia>
                       <CardTitle className="noUnderline" title={posts.title} subtitle={renderHTML('by <a href="http://blog.fossasia.org/author/' + posts.author + '" >' + posts.author + '</a>')} />
-                      <CardText style={{ fontSize: '16px' }}> {htmlContent}
+                      <CardText style={{ fontSize: '16px' }}><div>{htmlContent}</div>
                       </CardText>
                       <div className="social-btns">
                   <TwitterShareButton
@@ -209,6 +209,15 @@ class Blog extends Component {
           right: '20px',
           top: '20px',
           cursor: 'pointer'
+        }
+
+        let dialogStyle = {};
+        if(window.matchMedia('only screen and (max-width: 768px)').matches){
+            dialogStyle = {
+              width:'100%',
+              maxWidth:'none',
+              height:'auto',
+            };
         }
 
         return (
@@ -389,6 +398,8 @@ class Blog extends Component {
                 </section>
                 <Dialog
                   modal={false}
+                  bodyClassName='dialog'
+                  contentStyle={dialogStyle}
                   open={this.state.showCard}
                   onRequestClose={this.closeCard}
                   autoScrollBodyContent={true}

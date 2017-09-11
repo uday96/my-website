@@ -48,8 +48,6 @@ class Work extends Component {
           <li>Managing and creating databases using PostgreSql</li>
         </ul>;
 
-        console.log(myAlly.content);
-
         var americanExpress = {
           title: 'American Express',
           content: '',
@@ -215,6 +213,16 @@ class Work extends Component {
         top: '20px',
         cursor: 'pointer'
       }
+
+      let dialogStyle = {};
+      if(window.matchMedia('only screen and (max-width: 768px)').matches){
+          dialogStyle = {
+            width:'100%',
+            maxWidth:'none',
+            height:'auto',
+          };
+      }
+
         return (
             <div>
                 <StaticAppBar {...this.props}
@@ -275,6 +283,8 @@ class Work extends Component {
                 </section>
                 <Dialog
                   modal={false}
+                  bodyClassName='dialog'
+                  contentStyle={dialogStyle}
                   open={this.state.showCard}
                   onRequestClose={this.closeCard}
                   autoScrollBodyContent={true}
