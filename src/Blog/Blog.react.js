@@ -229,7 +229,9 @@ class Blog extends Component {
                         <div className="heading">
                             <h1>Blog</h1>
                             <p>My Blog posts published in FOSSASIA website<br/>
-                            <a href='http://blog.fossasia.org/author/uday96/'>http://blog.fossasia.org/author/uday96/</a>
+                            <a href='http://blog.fossasia.org/author/uday96/'>
+                              {'http://blog.fossasia.org/author/uday96/'}
+                            </a>
                             </p>
                         </div>
                     </div>
