@@ -3,14 +3,12 @@ jQuery(document).ready(function($){
 		offset = 0.8;
 
 	var headingBlock = $('.next-heading'),
-			btnBlock = $('.download-btn'),
-			footerBlock = $('.footer-container');
+			btnBlock = $('.download-btn');
 
 	//hide timeline blocks which are outside the viewport
 	hideBlocks(timelineBlocks, offset);
   myHideBlocks(headingBlock, offset);
 	myHideBlocks(btnBlock, offset);
-	myHideBlocks(footerBlock, 1);
 
 	//on scolling, show/animate timeline blocks when enter the viewport
 	$(window).on('scroll', function(){
@@ -19,13 +17,11 @@ jQuery(document).ready(function($){
 				 showBlocks(timelineBlocks, offset);
 				 myShowBlocks(headingBlock, offset);
  				 myShowBlocks(btnBlock, offset);
-				 myShowBlocks(footerBlock,1);
 			 }, 100)
 			: window.requestAnimationFrame(function(){
 				showBlocks(timelineBlocks, offset);
 				myShowBlocks(headingBlock, offset);
 				myShowBlocks(btnBlock, offset);
-				myShowBlocks(footerBlock, 1);
 			});
 	});
 

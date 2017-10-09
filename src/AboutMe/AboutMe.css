@@ -14,11 +14,11 @@
     text-align: center;
 }
 
-.next-heading.is-hidden, .download-btn.is-hidden, .footer-container.is-hidden{
+.next-heading.is-hidden, .download-btn.is-hidden{
   visibility: hidden;
 }
 
-.next-heading.bounce-in, .download-btn.bounce-in, .footer-container.bounce-in{
+.next-heading.bounce-in, .download-btn.bounce-in{
   visibility: visible;
   -webkit-animation: cd-bounce-1 0.6s;
   -moz-animation: cd-bounce-1 0.6s;

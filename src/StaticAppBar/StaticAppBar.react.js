@@ -170,7 +170,7 @@ class StaticAppBar extends Component {
 
         const TopLeftMenu = (props) => (
             <div style={{ position: 'relative'}}>
-                <div className="top-menu" style={{ position: 'relative', marginTop: '10px'}}>
+                <div className="top-menu" style={{ position: 'relative', marginTop: '15px'}}>
                     {navLeftlinks}
                 </div>
             </div>
@@ -178,7 +178,7 @@ class StaticAppBar extends Component {
 
         const TopRightMenu = (props) => (
             <div style={{ position: 'relative'}}>
-                <div className="top-menu" style={{ position: 'relative', marginTop: '10px'}}>
+                <div className="top-menu" style={{ position: 'relative', marginTop: '15px'}}>
                     {navRightlinks}
                 </div>
             </div>

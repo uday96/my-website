@@ -41,6 +41,7 @@ header {
   font-size: 20px;
   color: #000;
   font-family: "Courier New", Courier, monospace;
+  word-spacing: -7px;
 }
 
 .nav-down{

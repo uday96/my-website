@@ -42,10 +42,12 @@ class AboutMe extends Component{
         </div>
         <div className="blue-wrapper">
           <div className="blue-container">
-              <div className="heading">Download my Resume</div>
+              <div className="heading">View my Resume</div>
               <RaisedButton
+                href={"https://drive.google.com/file/d/0B7egd7SV_fB8N2NHRDlJOTRkWk0/view?usp=sharing"}
                 className='download-btn'
-                label="Download"
+                label="View"
+                labelStyle={{display:'block','verticalAlign':'center'}}
                 style={{margin: '20px'}} />
           </div>
         </div>
